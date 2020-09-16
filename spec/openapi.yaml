@@ -1,0 +1,110 @@
+openapi: 3.0.2
+info:
+  title: Iris API
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 0.0.1
+servers:
+- url: https://localhost:8080/
+- url: https://localhost:8080/
+paths:
+  /irises:
+    summary: Irises
+    description: Return all the Irises
+    get:
+      summary: GET all the Irises
+      operationId: getIrises
+      parameters:
+      - name: page
+        in: query
+        description: optional page number
+        schema:
+          type: integer
+          format: int32
+          default: 0
+      - name: size
+        in: query
+        description: optional size number
+        schema:
+          type: integer
+          format: int32
+          default: 10
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Iris'
+    post:
+      summary: POST Irise
+      operationId: postIris
+      requestBody:
+        description: Created Iris
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/Iris'
+        required: true
+      responses:
+        201:
+          description: created
+          content: {}
+
+  /irises/{id}:
+    get:
+      summary: GET Iris by id
+      operationId: getIrisById
+      parameters:
+      - name: id
+        in: path
+        description: ID of iris to return
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Iris'
+    delete:
+      summary: DELETE Iris by id
+      operationId: deleteIrisById
+      parameters:
+      - name: id
+        in: path
+        description: ID of iris to return
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content: {}
+
+components:
+  schemas:
+    Iris:
+      type: object
+      properties:
+        id:
+          type: string
+        species:
+          type: string
+        sepalLength:
+          type: number
+          format: double
+        sepalWidth:
+          type: number
+          format: double
+        petalLength:
+          type: number
+          format: double
+        petalWidth:
+          type: number
+          format: double
