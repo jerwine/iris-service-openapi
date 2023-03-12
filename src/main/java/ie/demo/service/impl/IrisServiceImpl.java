@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.springframework.data.domain.Page;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
@@ -15,6 +15,7 @@ import ie.demo.repository.IrisRepository;
 import ie.demo.model.IrisDTO;
 import ie.demo.service.IrisService;
 
+@RequiredArgsConstructor
 @Service
 public class IrisServiceImpl implements IrisService {
 
@@ -22,18 +23,10 @@ public class IrisServiceImpl implements IrisService {
 	final IrisRepository irisRepository;
 	final MongoTemplate mongoTemplate;
 
-	public IrisServiceImpl( IrisMapper irisMapper, IrisRepository irisRepository,
-			MongoTemplate mongoTemplate ) {
-		this.irisMapper = irisMapper;
-		this.irisRepository = irisRepository;
-		this.mongoTemplate = mongoTemplate;
-	}
-
 	@Override
 	public Optional<IrisDTO> getIrisById( String id ) {
 		Optional<Iris>iris = irisRepository.findById( id );
-		if( iris.isPresent() ) return Optional.of( irisMapper.toIrisDTO( iris.get() ) );
-		return Optional.empty();
+		return Optional.ofNullable( iris.isPresent() ? irisMapper.toIrisDTO( iris.get() ) : null );
 	}
 
 	@Override

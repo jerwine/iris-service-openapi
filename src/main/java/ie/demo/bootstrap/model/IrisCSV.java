@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class IrisCSV {
 
-	public final static String[] IRIS_CSV_COLUMS = new String[] { "sepal_length","sepal_width","petal_length","petal_width","species" };
+	public final static String[] IRIS_CSV_COLUMNS = new String[] { "sepal_length","sepal_width","petal_length","petal_width","species" };
 
 	@CsvBindByPosition(	position = 0, locale = "en" )
 	@CsvNumber(value = "0.##")

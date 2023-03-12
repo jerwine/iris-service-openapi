@@ -1,12 +1,13 @@
 package ie.demo.bootstrap;
 
-import static ie.demo.bootstrap.model.IrisCSV.IRIS_CSV_COLUMS;
+import static ie.demo.bootstrap.model.IrisCSV.IRIS_CSV_COLUMNS;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.io.Resource;
@@ -22,6 +23,7 @@ import ie.demo.bootstrap.model.IrisCSV;
 import ie.demo.repository.IrisRepository;
 import lombok.extern.slf4j.Slf4j;
 
+@RequiredArgsConstructor
 @Component
 @Slf4j
 public class Bootstrap implements CommandLineRunner {
@@ -31,11 +33,6 @@ public class Bootstrap implements CommandLineRunner {
 
 	final IrisRepository irisRepository;
 	final IrisCSVMapper irisCSVMapper;
-
-	public Bootstrap( IrisRepository irisRepository, IrisCSVMapper irisCSVMapper ) {
-		this.irisRepository = irisRepository;
-		this.irisCSVMapper = irisCSVMapper;
-	}
 
 	/*
 	 * @see org.springframework.boot.CommandLineRunner#run(java.lang.String[])
@@ -64,7 +61,7 @@ public class Bootstrap implements CommandLineRunner {
 		/* Set up the column mapping */
 		ColumnPositionMappingStrategy<IrisCSV>irisCSVstrategy = new ColumnPositionMappingStrategy<IrisCSV>();
 		irisCSVstrategy.setType( IrisCSV.class );
-		irisCSVstrategy.setColumnMapping( IRIS_CSV_COLUMS );
+		irisCSVstrategy.setColumnMapping( IRIS_CSV_COLUMNS );
 
 		/* Set up the reader of the CSV file */
 		BufferedReader reader = new BufferedReader( new InputStreamReader( resourceFile.getInputStream() ) );
